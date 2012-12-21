@@ -5,6 +5,9 @@ Write or improve tests, get badges. Remove tests, get anti-badges.
 
 Currently targeting mocha and git since that's what I use.
 
+To see the (not very useful) output right now try `./repo-stats.js <path to a git
+repo>`
+
 Badges
 ------
 
