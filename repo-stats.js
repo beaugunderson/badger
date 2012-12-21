@@ -2,7 +2,6 @@
 
 var async = require('async');
 var git = require('gift');
-var _ = require('underscore');
 
 var testStats = require('./test-stats');
 
@@ -96,7 +95,7 @@ async.series([
         }
 
         recurseTree(testTree, 'test', function () {
-          var tests = _.filter(BLOBS, function (blob) {
+          var tests = BLOBS.filter(function (blob) {
             return (/test\.js$/).test(blob.path);
           });
 

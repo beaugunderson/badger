@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var esprima = require('esprima');
-var _ = require('underscore');
 
 // Executes visitor on the object and its children (recursively).
 function traverse(object, visitor) {
@@ -23,7 +22,7 @@ function traverse(object, visitor) {
 var report;
 
 function binaryExpressionToString(expression) {
-  return _.map([expression.left, expression.right], function (part) {
+  return [expression.left, expression.right].map(function (part) {
     if (part.type === 'Literal') {
       return part.value;
     }
