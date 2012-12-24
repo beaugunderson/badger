@@ -142,6 +142,7 @@ async.series([
       BLOBS = [];
 
       var commitData = {
+        id: commit.id,
         author: commit.author,
         stats: {}
       };
@@ -175,7 +176,8 @@ async.series([
             });
 
             if (diffs.length) {
-              console.log(colors.green('Commit'), commitData.author.name);
+              console.log(colors.green('Commit'), commitData.author.name,
+                commitData.id);
               console.log(colors.red('Diff'), util.inspect(diffs));
 
               // Calculate totals
