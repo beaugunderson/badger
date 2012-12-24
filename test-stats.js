@@ -76,7 +76,11 @@ exports.getStats = function (content, cb) {
     range: true
   });
 
-  var stats = {};
+  var stats = {
+    'test': 0,
+    'test-async': 0,
+    'stub': 0
+  };
 
   report = function (type) {
     if (!stats[type]) {
