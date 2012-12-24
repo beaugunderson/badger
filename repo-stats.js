@@ -107,6 +107,8 @@ function compareCommitStats(a, b) {
   return diffs;
 }
 
+var totals = {};
+
 async.series([
   function (cb) {
     async.until(function () {
@@ -174,9 +176,22 @@ async.series([
 
             if (diffs.length) {
               console.log(colors.green('Commit'), commitData.author.name);
-              //console.log(util.inspect(commitData.stats));
-
               console.log(colors.red('Diff'), util.inspect(diffs));
+
+              // Calculate totals
+              if (!totals[commitData.author.name]) {
+                totals[commitData.author.name] = {};
+              }
+
+              diffs.forEach(function (file) {
+                Object.keys(file.diff).forEach(function (key) {
+                  if (!totals[commitData.author.name][key]) {
+                    totals[commitData.author.name][key] = 0;
+                  }
+
+                  totals[commitData.author.name][key] += file.diff[key];
+                });
+              });
 
               console.log(colors.grey('--------------'));
             }
@@ -193,5 +208,8 @@ async.series([
     });
   }
 ], function () {
+  console.log(colors.green('Totals'));
+  console.log(util.inspect(totals));
+
   process.exit();
 });
