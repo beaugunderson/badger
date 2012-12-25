@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var acorn = require('acorn');
 var esprima = require('esprima');
 
 // Executes visitor on the object and its children (recursively).
@@ -70,11 +71,14 @@ function checkTest(node) {
 }
 
 exports.getStats = function (content, cb) {
-  var syntax = esprima.parse(content, {
-    tolerant: true,
-    loc: true,
-    range: true
-  });
+  var syntax;
+
+  // acorn is faster than esprima but doesn't have a tolerant mode
+  try {
+    syntax = acorn.parse(content);
+  } catch (e) {
+    syntax = esprima.parse(content, { tolerant: true });
+  }
 
   var stats = {
     'test': 0,
